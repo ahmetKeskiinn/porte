@@ -25,7 +25,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
 
     lateinit var binding: B
     abstract fun onInitDataBinding()
-    private var isCreatedOnce = false
     private var viewModelStoreOwner: ViewModelStoreOwner? = null
 
     //private val viewModel by viewModels<VM>()
@@ -41,7 +40,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     ): View? {
         val vmClass = this.javaClass.findGenericWithType<VM>(ViewModel::class.java)
         if (vmClass != null)
-            viewModel = ViewModelProvider(this).get(vmClass)
+            viewModel = ViewModelProvider(this)[vmClass]
 
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner

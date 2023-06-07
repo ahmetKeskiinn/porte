@@ -1,5 +1,6 @@
 package com.ahmetkeskin.porte.di
 
+import com.ahmetkeskin.porte.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -25,7 +26,7 @@ class NetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttp)
-            .baseUrl("https://gateway.alb.com/api/v2/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(gsonConverterFactory)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()

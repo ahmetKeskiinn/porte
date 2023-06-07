@@ -16,7 +16,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://raw.githubusercontent.com/idnow/de.idnow.android/master' }
     }
 }
 

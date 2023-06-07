@@ -17,5 +17,5 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "Alb"
+rootProject.name = "Porte"
 include ':app'

@@ -1,4 +1,5 @@
 package com.ahmetkeskin.porte
 
-class BaseViewModel {
-}
+import androidx.lifecycle.ViewModel
+
+abstract class BaseViewModel : ViewModel()
