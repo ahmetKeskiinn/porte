@@ -1,11 +1,8 @@
-package com.ahmetkeskin.porte.feature.detail
+package com.ahmetkeskin.porte.feature.detail.presentation
 
-import androidx.navigation.Navigation
 import com.ahmetkeskin.porte.BaseFragment
 import com.ahmetkeskin.porte.R
 import com.ahmetkeskin.porte.databinding.FragmentDetailBinding
-import com.ahmetkeskin.porte.databinding.FragmentHomeBinding
-import com.ahmetkeskin.porte.feature.home.presentation.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.ahmetkeskin.porte.feature.detail
+package com.ahmetkeskin.porte.feature.detail.presentation
 
 import com.ahmetkeskin.porte.BaseViewModel
 import com.ahmetkeskin.porte.feature.home.data.PrefType

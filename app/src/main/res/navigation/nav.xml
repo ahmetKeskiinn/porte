@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.ahmetkeskin.porte.feature.detail.DetailFragment"
+        android:name="com.ahmetkeskin.porte.feature.detail.presentation.DetailFragment"
         android:label="DetailFragment" >
         <argument android:name="token"
             app:argType="string"
