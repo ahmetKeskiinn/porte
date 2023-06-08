@@ -6,6 +6,21 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ahmetkeskin.porte.feature.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:name="com.ahmetkeskin.porte.feature.home.presentation.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.ahmetkeskin.porte.feature.detail.DetailFragment"
+        android:label="DetailFragment" >
+        <argument android:name="token"
+            app:argType="string"
+            app:nullable="false"/>
+        <action
+            android:id="@+id/action_detailFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>
