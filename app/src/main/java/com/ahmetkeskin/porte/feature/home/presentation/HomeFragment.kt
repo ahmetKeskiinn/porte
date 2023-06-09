@@ -3,7 +3,7 @@ package com.ahmetkeskin.porte.feature.home.presentation
 import android.text.Editable
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.ahmetkeskin.porte.BaseFragment
+import com.ahmetkeskin.porte.base.BaseFragment
 import com.ahmetkeskin.porte.R
 import com.ahmetkeskin.porte.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint

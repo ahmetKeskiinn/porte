@@ -1,6 +1,6 @@
 package com.ahmetkeskin.porte.feature.home.domain
 
-import com.ahmetkeskin.porte.BaseViewModel
+import com.ahmetkeskin.porte.base.BaseViewModel
 import com.ahmetkeskin.porte.base.BaseUseCase
 import com.ahmetkeskin.porte.di.PrefManager
 import com.ahmetkeskin.porte.feature.home.data.PrefType

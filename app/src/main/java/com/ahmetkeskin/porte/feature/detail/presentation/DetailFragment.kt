@@ -17,8 +17,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ahmetkeskin.porte.BaseFragment
 import com.ahmetkeskin.porte.R
+import com.ahmetkeskin.porte.base.BaseFragment
 import com.ahmetkeskin.porte.base.getJsonDataFromAsset
 import com.ahmetkeskin.porte.databinding.FragmentDetailBinding
 import com.ahmetkeskin.porte.feature.detail.data.response.WeatherResponse
@@ -37,17 +37,47 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
     private lateinit var locationManager: LocationManager
     private val locationPermissionCode = 2
 
+    private lateinit var weatherAdapter: WeatherAdapter
+
     private lateinit var cityAdapter: CityAdapter
     private var cityList = arrayListOf<City>()
+
+    companion object {
+        private const val NEAREST_CITY = "Nearest City"
+    }
 
     override fun onInitDataBinding() {
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(requireActivity())[DetailViewModel::class.java]
         binding.vieModel = viewModel
         initClickListener()
+        initWeatherRecycler()
         setTextWatcherOnEditText()
         initRecycler()
         initUI()
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(), arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
+            locationPermissionCode
+        )
+    }
+
+    private fun checkPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) ==
+                PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) ==
+                PackageManager.PERMISSION_GRANTED
     }
 
     private fun initUI() {
@@ -58,6 +88,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
                 manageVisibilityWeather(false)
             }
         }
+    }
+
+    private fun initWeatherRecycler() {
+        weatherAdapter = WeatherAdapter()
+        binding.weatherRv.layoutManager = LinearLayoutManager(context)
+        binding.weatherRv.adapter = weatherAdapter
     }
 
     private fun manageVisibilityCitySearch(visibility: Boolean) {
@@ -72,7 +108,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
         binding.weatherRv.isVisible = visibility
     }
 
-    private fun getNearestCityModel() = City(id = -1, "Nearest City")
+    private fun getNearestCityModel() = City(id = -1, NEAREST_CITY)
+
     private fun initCityListFromJson(): ArrayList<City> {
         val list = arrayListOf<City>()
         list.add(getNearestCityModel())
@@ -101,8 +138,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
                 manageVisibilityCitySearch(false)
                 binding.weatherCity.hideSoftInput()
                 binding.weatherCity.clearFocus()
-                if (city.name == "Nearest City") {
-                    getCurrentLocationWeather()
+                if (city.name == NEAREST_CITY) {
+                    if (checkPermission()) {
+                        getCurrentLocationWeather()
+                    } else {
+                        requestPermission()
+                    }
                 } else {
                     getWeather(city.coord?.lat ?: 0.0, city.coord?.lon ?: 0.0)
                 }
@@ -191,6 +232,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
     }
 
     private fun getWeather(latitude: Double, longitude: Double) {
+        showProgress()
         viewModel.getWeather(lat = latitude, lon = longitude)
             ?.observe(viewLifecycleOwner, Observer {
                 initUIForWeather(it)
@@ -198,12 +240,14 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
     }
 
     private fun initUIForWeather(weatherResponse: WeatherResponse) {
+        weatherAdapter.submitList(weatherResponse.weather)
         val url =
             "https://openweathermap.org/img/wn/" + weatherResponse.weather?.get(0)?.icon + "@2x.png"
         Glide.with(binding.celcius).load(url).into(binding.weatherIcon)
         binding.run {
-            city.text = "${weatherResponse.name},${weatherResponse.Sys?.country}"
+            city.text = "${weatherResponse.name}, ${weatherResponse.Sys?.country}"
             celcius.text = (weatherResponse.main?.temp?.minus(273.15))?.roundToInt().toString()
+            hideProgress()
         }
     }
 }

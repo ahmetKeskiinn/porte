@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/celciusMax"
+        android:id="@+id/weatherName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/text_size_large"
@@ -23,11 +23,11 @@
         app:layout_constraintTop_toTopOf="@id/weatherItemIcon" />
 
     <TextView
-        android:id="@+id/celciusMin"
+        android:id="@+id/weatherDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/text_size_large"
-        app:layout_constraintBottom_toBottomOf="@id/celciusMax"
-        app:layout_constraintStart_toEndOf="@id/celciusMax"
-        app:layout_constraintTop_toTopOf="@id/celciusMax" />
+        app:layout_constraintBottom_toBottomOf="@id/weatherName"
+        app:layout_constraintStart_toEndOf="@id/weatherName"
+        app:layout_constraintTop_toTopOf="@id/weatherName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

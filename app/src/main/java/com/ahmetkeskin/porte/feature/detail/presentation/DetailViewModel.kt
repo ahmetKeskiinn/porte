@@ -1,6 +1,6 @@
 package com.ahmetkeskin.porte.feature.detail.presentation
 
-import com.ahmetkeskin.porte.BaseViewModel
+import com.ahmetkeskin.porte.base.BaseViewModel
 import com.ahmetkeskin.porte.di.PrefManager
 import com.ahmetkeskin.porte.feature.detail.domain.GetWeather
 import dagger.hilt.android.lifecycle.HiltViewModel

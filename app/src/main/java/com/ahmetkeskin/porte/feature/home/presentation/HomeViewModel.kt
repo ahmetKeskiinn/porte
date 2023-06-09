@@ -1,6 +1,6 @@
 package com.ahmetkeskin.porte.feature.home.presentation
 
-import com.ahmetkeskin.porte.BaseViewModel
+import com.ahmetkeskin.porte.base.BaseViewModel
 import com.ahmetkeskin.porte.feature.home.data.PrefType
 import com.ahmetkeskin.porte.feature.home.domain.SetAndGetToken
 import dagger.hilt.android.lifecycle.HiltViewModel
