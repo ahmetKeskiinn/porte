@@ -1,5 +1,6 @@
 package com.ahmetkeskin.porte.feature.home.domain
 
+import com.ahmetkeskin.porte.BaseViewModel
 import com.ahmetkeskin.porte.base.BaseUseCase
 import com.ahmetkeskin.porte.di.PrefManager
 import com.ahmetkeskin.porte.feature.home.data.PrefType
@@ -14,7 +15,7 @@ class SetAndGetToken @Inject constructor(
         val token: String? = null
     )
 
-    override fun execute(input: Params?): String? {
+    override fun execute(viewModel: BaseViewModel, input: Params?): String? {
         return when (input?.key) {
             PrefType.SET -> {
                 prefManager.token = input.token

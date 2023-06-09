@@ -11,10 +11,10 @@ class HomeViewModel @Inject constructor(
     private val setAndGetToken: SetAndGetToken
 ) : BaseViewModel() {
     fun setToken(token: String) {
-        setAndGetToken.execute(SetAndGetToken.Params(PrefType.SET, token))
+        setAndGetToken.execute(this, SetAndGetToken.Params(PrefType.SET, token))
     }
 
     fun getToken() =
-        setAndGetToken.execute(SetAndGetToken.Params(PrefType.GET))
+        setAndGetToken.execute(this, SetAndGetToken.Params(PrefType.GET))
 
 }
