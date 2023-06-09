@@ -5,4 +5,5 @@
     <string name="remember_me">Remember My Api Key..</string>
     <string name="go_back">Back</string>
     <string name="refresh">Refresh</string>
+    <string name="cancel">Cancel</string>
 </resources>

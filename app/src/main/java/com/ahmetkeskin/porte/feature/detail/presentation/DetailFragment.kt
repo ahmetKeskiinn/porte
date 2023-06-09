@@ -8,6 +8,8 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -34,17 +36,40 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
 
     private lateinit var locationManager: LocationManager
     private val locationPermissionCode = 2
+
     private lateinit var cityAdapter: CityAdapter
     private var cityList = arrayListOf<City>()
+
     override fun onInitDataBinding() {
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(requireActivity())[DetailViewModel::class.java]
         binding.vieModel = viewModel
         initClickListener()
         setTextWatcherOnEditText()
-        binding.cityList.isVisible = true
         initRecycler()
-        //Log.d("TAG", "onInitDataBinding: " + initCityListFromJson())
+        initUI()
+    }
+
+    private fun initUI() {
+        binding.appName.isFocusable = true
+        binding.weatherCity.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                manageVisibilityCitySearch(true)
+                manageVisibilityWeather(false)
+            }
+        }
+    }
+
+    private fun manageVisibilityCitySearch(visibility: Boolean) {
+        binding.cityList.isVisible = visibility
+        binding.cancel.isVisible = visibility
+    }
+
+    private fun manageVisibilityWeather(visibility: Boolean) {
+        binding.weatherIcon.isVisible = visibility
+        binding.city.isVisible = visibility
+        binding.celcius.isVisible = visibility
+        binding.weatherRv.isVisible = visibility
     }
 
     private fun getNearestCityModel() = City(id = -1, "Nearest City")
@@ -63,10 +88,19 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
         return list
     }
 
+    fun View.hideSoftInput() {
+        val inputMethodManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
     private fun initRecycler() {
         cityAdapter = CityAdapter(object : CityClickListener {
             override fun onCityClicked(city: City) {
-                binding.cityList.isVisible = false
+                manageVisibilityWeather(true)
+                manageVisibilityCitySearch(false)
+                binding.weatherCity.hideSoftInput()
+                binding.weatherCity.clearFocus()
                 if (city.name == "Nearest City") {
                     getCurrentLocationWeather()
                 } else {
@@ -138,6 +172,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(
 
     private fun initClickListener() {
         binding.back.setOnClickListener { goBack() }
+        binding.cancel.setOnClickListener {
+            manageVisibilityWeather(true)
+            binding.weatherCity.clearFocus()
+            binding.weatherCity.hideSoftInput()
+            manageVisibilityCitySearch(false)
+        }
     }
 
     private fun goBack() {
