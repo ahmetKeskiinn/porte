@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="margin_small">6dp</dimen>
+    <dimen name="margin_medium">10dp</dimen>
     <dimen name="margin_large">20dp</dimen>
 
 
     <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_large">24sp</dimen>
 </resources>
