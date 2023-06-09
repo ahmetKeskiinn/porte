@@ -1,4 +1,4 @@
-package com.ahmetkeskin.porte
+package com.ahmetkeskin.porte.base
 
 import androidx.lifecycle.ViewModel
 

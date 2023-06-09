@@ -1,4 +1,4 @@
-package com.ahmetkeskin.porte
+package com.ahmetkeskin.porte.base
 
 import android.content.Context
 import android.graphics.Rect
@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.ahmetkeskin.porte.findGenericWithType
 
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
